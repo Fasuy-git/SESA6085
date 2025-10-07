@@ -55,7 +55,6 @@
   spacing: 0.65em,
 )
 
-#set heading(numbering: "1.")
 #set math.mat(delim: "[")
 #set math.vec(delim: "[")
 
@@ -85,5 +84,13 @@
   #pagebreak()
 
 ]<contents>
+
+#include "definitions.typ"
+
+#show: equate.with(breakable: true, sub-numbering: true)
+#set math.equation(numbering: "(1.1)", supplement: [Eq.])
+#set heading(numbering: "1.")
+#set math.mat(delim: "[")
+#set math.vec(delim: "[")
 
 #include "lecture_1/lecture_1.typ"
