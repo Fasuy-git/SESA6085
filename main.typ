@@ -24,7 +24,7 @@
 
 #align(left)[
   Author: Yusaf Sultan \
-  Lecturer: Charlie Ryan \
+  Lecturer: David Toal \
   Word Count: #total-words  \
   #v(2cm)
 ]
