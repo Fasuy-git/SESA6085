@@ -29,7 +29,7 @@ This module uses the following notation for the probability of combined events, 
 - *$P(A|B)$*: Probability of event *$A$* given event *$B$* has already occurred.
 - *$P(overline(A))$*: Probability of event *$A$* *not* occurring (note that $P(A)=1-P(overline(A))$).
 
-=== Statical Independence
+== Statical Independence
 
 If two events are *statistically independent* (s-independent) from one another (meaning that the probability of one event occurring is completely separate from another event happening or not happening), then *@1-s-independent* is true.
 
@@ -44,10 +44,10 @@ $<1-s-independent>
 Furthermore, the joint probability of two s-independent events can be represented in the forms shown in *@1-adjoint-s-independent* with the further expressions derived from subbing in *@1-s-independent*, *@1-adjoint-s-independent* is also known as the *product or series rule*.
 
 $
-  cases(P(A B) = P(A)P(B),) "s-independent"
+  cases(P(A B) = P(A)P(B)) "s-independent"
 $<1-adjoint-s-independent>
 
-=== Statistical Dependence
+== Statistical Dependence
 
 If two events are instead *statistically dependent* (s-dependent) from one another (the probability of on event happening or not happening *does* have an effect of the probability of another event), then the adjoint probability of these two events is shown in *@1-adjoint-s-dependent*
 
@@ -69,3 +69,50 @@ $
 $<1-or-probability>
 
 Note that the $P(A B)$ in *@1-or-probability* must be subtracted as it is counted twice in the first two terms.
+
+== Mutual Exclusivity
+
+Two events can be said top be mutually exclusive if they *cannot occur at the same time as one another*. This means that the adjoint probability and or probability can be written in the form shown in *@1-mutual-exclusivity*.
+
+$
+  cases(P(A B) = 0, P(A + B) = P(A) + P(B)) "If A and B are Mutually Exclusive"
+$<1-mutual-exclusivity>
+
+If instead there are *multiple mutually exclusive events* which together yield the probability of another event, then then probability of that event can be written in the form given by *@1-multiple-mutual-exclusive*.
+
+$
+  cases(P(A) = sum_(i) P(A B_i) = sum_(i)P(A|B_i)P(B_i))"If A and all Bs are Mutually Exclusive"
+$<1-multiple-mutual-exclusive>
+
+== Sequence Diagrams
+
+Sequence diagrams act as an easy way of visualizing complex interactions and can be used to calculate overall probabilities, an example of a sequence diagram is shown in *@1-sequence-diagram*.
+
+#figure(
+  image("images/1-sequance-diagrams.png", width: 80%),
+  caption: [Example of a sequence diagram.],
+  supplement: [Figure],
+  kind: figure,
+) <1-sequence-diagram>
+
+Probabilities down a leg are *and* probabilities and are therefore multiplied given that they are *statistically independent*. *Or* probabilities can be calculated by adding together subsequent probabilities.
+
+== Baye's Theorem
+
+By rearranging *@1-adjoint-s-dependent* a simple form of *Baye's theorem* which is shown in *@1-simple-bayes*.
+
+$
+  P(A|B) = (P(B|A)P(A))/P(B) #h(1cm) "Given" P(B) eq.not 0
+$<1-simple-bayes>
+
+*@1-simple-bayes* can be further developed by substituting in *@1-multiple-mutual-exclusive* which yields the *generalized Baye's theorem* shown *@1-general-bayes*.
+
+$
+  P(A_j |B) = (P(B|A_i)P(A_i)) / (sum_(j)P(B|A_j)P(A_j))
+$<1-general-bayes>
+
+Note that in *@1-general-bayes* $A_j$ is the jth event effecting the event $B$. If the probability of event $B$ depends on the probability of event $A$ both happening and not happening then *@1-general-bayes* simplifies down to a form called the *binary partition* form, shown in *@1-binary-bayes*.
+
+$
+  P(A|B) = (P(B|A)P(A))/(P(B|A)P(A) + P(B|overline(A))P(overline(A)))
+$<1-binary-bayes>
