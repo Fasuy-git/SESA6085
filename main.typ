@@ -12,7 +12,7 @@
 #v(9cm)
 
 #align()[
-  #text(28pt)[#strong[SESA6085 ]] \
+  #text(28pt)[#strong[SESA6085]] \
 
   #text(15pt)[Advanced Aerospace Engineering Management]
 ]
@@ -94,3 +94,4 @@
 #set math.vec(delim: "[")
 
 #include "lecture_1/lecture_1.typ"
+#include "lecture_2/lecture_2.typ"

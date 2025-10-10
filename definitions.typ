@@ -25,6 +25,9 @@
   [Probability of event *$A$* given event *$B$* has already occurred],
   [*$P(overline(A))$*],
   [Probability of event *$A$* not occurring.],
+
+  [*$"s-independent"$*], [statistically independent events], [*$"s-dependent"$*], [statistically dependent events],
+  [*$f(t)$*], [Probability Distribution Function (PDF)], [*$F(t)$*], [Cumulative Distribution Function (CDF)],
 )
 
 #pagebreak()

@@ -116,3 +116,5 @@ Note that in *@1-general-bayes* $A_j$ is the jth event effecting the event $B$. 
 $
   P(A|B) = (P(B|A)P(A))/(P(B|A)P(A) + P(B|overline(A))P(overline(A)))
 $<1-binary-bayes>
+
+#pagebreak()
