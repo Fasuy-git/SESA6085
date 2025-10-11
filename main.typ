@@ -40,11 +40,11 @@
   ],
   footer: context [
     #align(center)[
-      #box(height: 14pt)[#v(0.35cm) #line(length: 45%)]
+      #box(height: 14pt)[#v(0.35cm) #line(length: 43%)]
       #h(0.569cm)
       #counter(page).display("1")
       #h(0.569cm)
-      #box(height: 14pt)[#v(0.35cm) #line(length: 45%)]
+      #box(height: 14pt)[#v(0.35cm) #line(length: 43%)]
     ]
   ],
 )
