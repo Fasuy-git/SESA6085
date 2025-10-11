@@ -28,6 +28,7 @@
 
   [*$"s-independent"$*], [statistically independent events], [*$"s-dependent"$*], [statistically dependent events],
   [*$f(t)$*], [Probability Distribution Function (PDF)], [*$F(t)$*], [Cumulative Distribution Function (CDF)],
+  [*$R(t)$*], [Reliability Function], [*$h(t)$*], [Hazard Function],
 )
 
 #pagebreak()
