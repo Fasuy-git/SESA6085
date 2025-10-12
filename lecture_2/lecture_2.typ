@@ -188,4 +188,136 @@ The PDF and CDF for a log normal probability distribution are shown graphically 
   kind: figure,
 )<2-log-normal-pdf-cdf-plots>
 
-===
+=== Exponential Distribution
+
+These distributions feature a *constant hazard rate* which is useful to model some processes. The PDf and CDF are shown mathematically in *@2-exponential-dist-pdf-cdf*.
+
+$
+  f(t) = cases(
+    lambda exp(-lambda t) #h(1cm) & t gt.eq 0,
+    0 & t < 0
+  ) \
+  F(t) = cases(
+    0 #h(2.7cm) && t < 0,
+    1 - exp(-lambda t) && t gt.eq 0
+  )
+$<2-exponential-dist-pdf-cdf>
+
+Where:
+- *$lambda$*: Scaling parameter (Also is the constant hazard rate)
+
+It is important to note that 1/$lambda$ is the mean time to failure (MTTF). The PDF and CDF for an exponential distribution are shown graphically in *@2-exponential-pdf-cdf-plots*.
+
+#figure(
+  grid(
+    columns: 2,
+    [#image("images/2-exponential-pdf.png")], [#image("images/2-exponential-cdf.png")],
+  ),
+  caption: [Plots of exponential PDFs [left] and plots of exponential CDFs [right]. ],
+  supplement: [Figure],
+  kind: figure,
+)<2-exponential-pdf-cdf-plots>
+
+=== Weibull Distribution
+
+Is one of the most extensible and useful distributions out there, and can be used to model a lot of different distributions. The PDF, CDF and hazard rate are shown in *@2-weibull-dist-pdf-cdf-hazard*.
+
+$
+  f(t) = cases(
+    beta / eta^beta t^(beta-1) exp(-(t/eta)^beta) #h(1cm) & t gt.eq 0,
+    0 & t < 0
+  ) \
+  F(t) = 1 - exp(-(t/eta)^beta) #h(1cm)
+  h(t) = beta / eta^beta t^(beta-1)
+$<2-weibull-dist-pdf-cdf-hazard>
+
+Where:
+
+- *$beta$*: Shape parameter
+- *$eta$*: Scaling parameter (characteristic life)
+
+$eta$ is also the point at which 63.2% of the population have failed. Weibull distributions are so versatile as the $beta$ parameter changes the shape into different distributions:
+
+#grid(
+  columns: 2,
+  row-gutter: 1em,
+  [- $beta = 1$: Constant hazard function (exponential dist)], [- $beta > 1$: Increasing hazard rate],
+  [- $beta < 1$: Decreasing hazard rate], [- $beta = 3.5$: Normal distribution],
+)
+
+The PDF and CDF for various Weibull distributions are shown graphically in *@2-weibull-pdf-cdf-plots*.
+
+#figure(
+  grid(
+    columns: 2,
+    [#image("images/2-weibull-pdf.png")], [#image("images/2-weibull-cdf.png")],
+  ),
+  caption: [Plots of Weibull PDFs [left] and plots of Weibull CDFs [right] for various $beta s$. ],
+  supplement: [Figure],
+  kind: figure,
+)<2-weibull-pdf-cdf-plots>
+
+
+=== Three Parameter Weibull Distribution
+
+Introduces a new parameter $gamma$ which is used to switch on the probability, its useful if the failures only start after a set time. The PDF, CDF and hazard rate are shown in *@2-three-weibull-dist-pdf-cdf-hazard*.
+
+$
+  f(t) = cases(
+    beta / eta^beta (t-gamma)^(beta-1) exp(-((t-gamma)/eta)^beta) #h(1cm) & t gt.eq 0,
+    0 & t < 0
+  ) \
+  F(t) = 1 - exp(-((t-gamma)/eta)^beta) #h(1cm)
+  h(t) = beta / eta^beta (t-gamma)^(beta-1)
+$<2-three-weibull-dist-pdf-cdf-hazard>
+
+Where:
+
+- *$beta$*: Shape parameter
+- *$eta$*: Scaling parameter (characteristic life)
+- *$gamma$*: Location parameter (failure free time)
+
+=== Other Distribution Functions (Non-Examinable)
+
+Like was stated previously, there are an infin ite number of PDFs as the only criteria is for the area under the curve to sum to 1. Some other common distributions and their purposes are mentioned below:
+
+- *Rayleigh Distribution*: Similar to exponential but with a linearly increasing hazard rate.
+- *Gamma Distribution*: Similar to Weibull in that it can model a wide number of distributions by varying the parameters.
+- *Beta Distribution*: A complex distribution which uses multiple gamma distributions to ensure that the life is limited to a set interval.
+- *Inverse Gamma Distribution*
+- *Log-logistic Distribution*
+- *Birnbaum-Saunders Distribution*
+
+== Discrete Distributions
+
+Whereas continuous distributions can model the probability over time, discrete distributions model the probability per an $n$ number of events, some common discrete distributions are shown below.
+
+=== Binomial Distribution
+
+Used where the outcome of each discrete event is either pass or fail, the PDF for a binomial distribution function is defined by *@2-binomial-dist-pdf*.
+
+#set math.vec(delim: "(")
+
+$
+  f(x) = vec(n, x)p^x q^(n-x) \
+  n!/(x!(n-x)!) equiv vec(n, x)
+$<2-binomial-dist-pdf>
+
+Where:
+
+- *$x$*: The number of passes
+- *$n$*: Total number of trails
+- *$p$*: Probability of success
+- *$q$*: Probability of failure
+- *$vec(n, x)$*: Binomial coefficient
+
+#set math.vec(delim: "[")
+
+Note that the *binomial coefficient* is a parameter that will appear often and is read as `"n choose x"`. Usefully, it also represents the *number of possible combinations of $n$ from $x$*.
+
+=== Other Discrete Distributions
+
+Some other commonly used discrete distributions are:
+
+- *Poisson's Distribution*: Represents an event occurring at a constant rate and can approximate the binomial distribution.
+- *Hypergeometric Distribution* Models the probability if there are no replacements.
