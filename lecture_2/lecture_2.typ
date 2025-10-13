@@ -321,3 +321,5 @@ Some other commonly used discrete distributions are:
 
 - *Poisson's Distribution*: Represents an event occurring at a constant rate and can approximate the binomial distribution.
 - *Hypergeometric Distribution* Models the probability if there are no replacements.
+
+#pagebreak()
