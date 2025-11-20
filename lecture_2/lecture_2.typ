@@ -133,7 +133,7 @@ The PDF and CDF for a triangular probability distribution are shown graphically 
 
 === Gaussian Distribution
 
-Also known as the the *Normal Distribution* is the most commonly used probability distribution function. The PDF  is shown in *@2-gaussian-dist-pdf* (*Note no CDF exists*).
+Also known as the the *Normal Distribution* is the most commonly used probability distribution function. The PDF  is shown in *@2-gaussian-dist-pdf* (*Note no close form CDF exists*).
 
 $
   f(t) = 1/(sigma (2pi)^(1/2)) exp(-1/2((t-mu)/sigma)^2)
