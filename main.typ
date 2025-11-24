@@ -100,3 +100,4 @@
 #include "lecture_5/lecture_5.typ"
 #include "lecture_6/lecture_6.typ"
 #include "lecture_7/lecture_7.typ"
+#include "lecture_8/lecture_8.typ"
