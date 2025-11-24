@@ -177,8 +177,6 @@ $<5-interval-censored-MLE>
 
 Multiple types of censoring are shown in *@5-MLE-combined-censoring*. Note, it is still possible to use MLE to find optimum parameters, use the Fisher matrix to find the confidence intervals and form a censored joint distribution function.
 
-
-
 $
   L(bold(theta)) =
   {product_(i in U) f(t_i:bold(theta))}
@@ -186,3 +184,5 @@ $
   {product_(i in C_I) F(T_I_(U B):bold(theta)) - F(T_I_(L B):bold(theta))}
   {product_(i in C_R) R(T_R:bold(theta))}
 $<5-MLE-combined-censoring>
+
+#pagebreak()
