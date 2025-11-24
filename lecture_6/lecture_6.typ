@@ -109,7 +109,7 @@ Note that in this equation, $sigma$ is initially unknown. Critically, this equat
 Normal monte carlo simulations make used of *pseudo-random* numbers. Pseudo-random numbers attempt to mimic real world randomness and are generated via a random number generator. One issue with pseudo-random numbers however, is that they are not very uniform, they tend to cluster and leave gaps. For better convergence of the monte carlo simulation, quasi-random numbers are used, which have a focus on uniformity rather than randomness, an example of pseudo-random and quasi-random numbers is shown in *@6-random-numbers*.
 
 #figure(
-  image("images/6-random-numbers.png", width: 70%),
+  image("images/6-random-numbers.png", width: 90%),
   caption: [Pseudo-random vs Quasi-random numbers.],
   supplement: [Figure],
   kind: figure,
