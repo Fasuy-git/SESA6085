@@ -57,7 +57,7 @@ $<3-most-likely-parameters>
 The values of *@3-most-likely-parameters* can be obtained using an optimization algorithm, or can be obtained via analytical equations using the criteria shown in *@3-likelihood-criteria*.
 
 $
-  (diff l)/(diff theta_j) = 0 #h(1cm) j=1,2,...,m
+  (partial l)/(partial theta_j) = 0 #h(1cm) j=1,2,...,m
 $<3-likelihood-criteria>
 
 === MLE for a Gaussian Distribution
