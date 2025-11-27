@@ -69,5 +69,139 @@
   ),
   caption: [Failure times for all 120 components.],
 ) <all-failure-times>
+
 = Question 1
-==
+
+== Use the data provided to estimate the parameters of this model [4 marks]
+
+=== Defining the Component PDF
+
+As there are two distributions modelling two possible failure modes of the component, a *competing risk model* can be used to represent the overall PDF, this is shown in *@1a-competing-risk-model*.
+
+$
+  f(t) = f_1(t) R_2 (t) + f_2 (t) R_1 (t)
+$<1a-competing-risk-model>
+
+In *@1a-competing-risk-model*, $f_1(t)$ represents the first failure mode, which is a *log-normal distribution*. The second failure mode $f_2(t)$ is represented by a *normal distribution*. These are both shown in *@1a-pdfs*.
+
+$
+  f_1(t) =
+  1/(t sigma_1 sqrt(2pi)) exp(-1/2((ln(t)-mu_1)/sigma_1)^2)
+  quad quad
+  f_2(t) =
+  1/(sigma_2 sqrt(2pi)) exp(-1/2((t-mu_2)/sigma_2)^2)
+$<1a-pdfs>
+
+There does not exist a *closed form solution* to the CDFs for the PDFs shown in *@1a-pdfs*, however the error function can be used to write the equations in an analytical form, still allowing for parameter estimation using MLE. The error function is shown in *@1a-err-func*.
+
+$
+  "erf"(x) = 2/sqrt(pi) integral_(0)^x e^(-t)^2 d t
+$<1a-err-func>
+
+Utilizing *@1a-err-func*, the CDFs as well as the reliabilities for the PDFs defined in *@1a-pdfs* can be evaluated, yielding to *@1a-cdfs-reliability*.
+
+$
+  F_1 (t) =
+  integral_(-infinity)^(t)f_1(t)d t
+  = 1/2(1+"erf"((ln(t) - mu_1)/(sigma_1 sqrt(2))))
+  \
+  R_1(t) = 1 - F_1(t) = 1/2(1 - "erf"((ln(t) - mu_1)/(sigma_1 sqrt(2))))
+  \
+  F_2 (t) =
+  integral_(-infinity)^(t)f_2(t)d t
+  = 1/2(1+"erf"((t - mu_2)/(sigma_2 sqrt(2))))
+  \
+  R_2(t) = 1 - F_2(t) = 1/2(1 - "erf"((t - mu_2)/(sigma_2 sqrt(2))))
+$<1a-cdfs-reliability>
+
+Substituting *@1a-cdfs-reliability* into *@1a-competing-risk-model* yield the full form of the PDF encompassing both failure modes, this is shown in *@1a-full-pdf*.
+
+$
+  f(t) = [1/(t sigma_1 sqrt(2pi)) exp(-1/2((ln(t)-mu_1)/sigma_1)^2)][1/2(1 - "erf"((t - mu_2)/(sigma_2 sqrt(2))))] ...
+  \
+  ... + [1/(sigma_2 sqrt(2pi)) exp(-1/2((t-mu_2)/sigma_2)^2)][1/2(1 - "erf"((ln(t) - mu_1)/(sigma_1 sqrt(2))))]
+$<1a-full-pdf>
+
+=== Constructing the Liklehood Equation
+
+As defined in *@how-data-is-censored*, there is both right and left censoring in the set of data. The general form of  the liklehood equation with left and right censoring is shown in *@general-MLE-combined-censoring*.
+
+$
+  L(bold(theta)) =
+  {product_(i in U) f(t_i:bold(theta))}
+  {product_(i in C_L) F(T_L:bold(theta))}
+  {product_(i in C_R) R(T_R:bold(theta))}
+$<general-MLE-combined-censoring>
+
+For a competing risk model, the reliability and CDF is given by the product of the reliabilities and CDFs of the failure modes, these equations are shown in *@1a-component-cdf-reliability*.
+
+$
+  R(t) = R_1(t) R_2 (t) = [1/2(1 - "erf"((ln(t) - mu_1)/(sigma_1 sqrt(2))))][ 1/2(1 - "erf"((t - mu_2)/(sigma_2 sqrt(2))))]
+  \
+  F(t) = 1 - R_1(t) R_2 (t) = 1 - [1/2(1 - "erf"((ln(t) - mu_1)/(sigma_1 sqrt(2))))][ 1/2(1 - "erf"((t - mu_2)/(sigma_2 sqrt(2))))]
+  \
+$<1a-component-cdf-reliability>
+
+The final thing to define before constructing the likelihood equation is define the parameters to obtain ($bold(theta)$ within *@general-MLE-combined-censoring*), this is shown in *@MLE-param*.
+
+$
+  bold(theta) = mu_1, sigma_1, mu_2, sigma_2
+$<MLE-param>
+
+Substituting in *@MLE-param*, *@1a-component-cdf-reliability* and *@1a-full-pdf* into *@general-MLE-combined-censoring* yields *@1a-likelihood*.
+
+$
+  L(mu_1, sigma_1, mu_2, sigma_2) =
+  {
+    product_(i=1)^n_U [1/(t_i sigma_1 sqrt(2pi)) exp(-1/2((ln(t_i)-mu_1)/sigma_1)^2)][1/2(1 - "erf"((t_i - mu_2)/(sigma_2 sqrt(2))))] ...
+    \
+    ... + [1/(sigma_2 sqrt(2pi)) exp(-1/2((t_i-mu_2)/sigma_2)^2)][1/2(1 - "erf"((ln(t_i) - mu_1)/(sigma_1 sqrt(2))))]
+  }
+  ... \ ...
+  {
+    product_(i=1)^n_C_L 1 - [1/2(1 - "erf"((ln(T_L) - mu_1)/(sigma_1 sqrt(2))))][ 1/2(1 - "erf"((T_L - mu_2)/(sigma_2 sqrt(2))))]
+  }
+  ... \ ...
+  {
+    product_(i=1)^n_C_R [1/2(1 - "erf"((ln(T_R) - mu_1)/(sigma_1 sqrt(2))))][ 1/2(1 - "erf"((T_R - mu_2)/(sigma_2 sqrt(2))))]
+  }
+$<1a-likelihood>
+
+=== Determining the Log Likelihood
+
+Taking natural logs of *@general-MLE-combined-censoring* and then rearranging yields the equation shown in *@general-MLE-logs*.
+
+$
+  l(bold(theta)) = ln(L(bold(theta))) =
+  sum_(i=1)^n_U ln(f(t_i:bold(theta))) +
+  sum_(i=1)^n_C_L ln(F(T_L:bold(theta))) +
+  sum_(i=1)^n_C_R ln(R(T_R:bold(theta)))
+$<general-MLE-logs>
+
+Applying *@general-MLE-logs* to *@1a-likelihood* yields *@1a-log-likelihood*.
+
+$
+  l(mu_1, sigma_1, mu_2, sigma_2) =
+  \
+  sum_(i=1)^n_U ln(
+    [1/(t_i sigma_1 sqrt(2pi)) exp(-1/2((ln(t_i)-mu_1)/sigma_1)^2)][1/2(1 - "erf"((t_i - mu_2)/(sigma_2 sqrt(2))))] ...
+    \
+    ... + [1/(sigma_2 sqrt(2pi)) exp(-1/2((t_i-mu_2)/sigma_2)^2)][1/2(1 - "erf"((ln(t_i) - mu_1)/(sigma_1 sqrt(2))))]
+  ) + \
+  sum_(i=1)^n_C_L ln(1 - [1/2(1 - "erf"((ln(T_L) - mu_1)/(sigma_1 sqrt(2))))][ 1/2(1 - "erf"((T_L - mu_2)/(sigma_2 sqrt(2))))]) + \
+  sum_(i=1)^n_C_R ln([1/2(1 - "erf"((ln(T_R) - mu_1)/(sigma_1 sqrt(2))))][ 1/2(1 - "erf"((T_R - mu_2)/(sigma_2 sqrt(2))))])
+$<1a-log-likelihood>
+
+=== Obtaining Parameter Using Python Code
+
+The equation shown in *@1a-log-likelihood* is too complex to be solved by taking derivatives w.r.t each MLE parameter and then setting those equations to zero. Instead a brute force method is used to estimate the values of $accent(theta, hat) = accent(mu, hat)_1,accent(sigma, hat)_1,accent(mu, hat)_2,accent(sigma, hat)_2$. The Python code utilized for this analysis is included in the Zip file in `Q1a\main.py`. Using this code, the parameters generated are shown in *@q1a-solution*
+
+$
+  "Log Normal Dist Param" = cases(mu_1 = 2.6543, sigma_1 = 2.3610) quad
+  "Normal Dist Param" = cases(mu_2 = 36.5430, sigma_2 = 4.4290)
+$<q1a-solution>
+
+
+
+
+
