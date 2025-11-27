@@ -220,7 +220,7 @@ $<q1b-solution>
 #pagebreak()
 
 = Question 2
-== How many potential routes are there for data to pass from G1 to G2? List these routes. [2 Marks]
+== How many potential routes are there for data to pass from G1 to G2? List these routes. [2 marks]
 
 For *Figure 1* in the coursework, the total number of paths the data can take, as well as the specific paths are detailed in *@q2a-solution*.
 
@@ -237,3 +237,55 @@ $
   G 1 ->S 1 -> S 5-> G 2 \
   G 1 ->S 1 -> S 4-> G 2
 $<q2a-solution>
+
+#pagebreak()
+
+== Use the RBD presented in Figure 2 and the PDF parameters in Table 1 to calculate the reliability (to 4 d.p.) of a single satellite after 20 years [5 marks]
+
+=== General Block Reliability
+
+Every block in the RBD shown in *Figure 2* utilizes a Weibull distribution to model the behavior of the component, the PDF, CDF and reliability for a Weibull distribution are shown in *@q2b-weibull*
+
+$
+  f(t) =
+  beta / eta^beta t^(beta-1) exp(-(t/eta)^beta) quad quad
+  F(t) = 1 - exp(-(t/eta)^beta) \
+  R(t) = 1 - F(t) = exp(-(t/eta)^beta)
+$<q2b-weibull>
+
+
+As system is modelled using a series reliability model, the total reliability will therefore be the product of the reliability of each component of the system, this is shown in *@q2b-system-reliability*.
+
+$
+  R_(s y s) = product_(i=1)^n R_i = R_("Gyro")^*R_("Battery")^*R_("Computer")R_("Control Pro")R_("Electrical Dist")R_("Telem")R_("Solar Array")^*R_("Thruster")
+$<q2b-system-reliability>
+
+
+=== Active Redundant Systems
+
+The Gyro and Battery are modelled in *Figure 2* as 1-out-of-3 and 1-out-of-2 systems respectively. This means they are effectively active redundant systems with multiple branches. Assuming the Weibull parameters in *Table 1* of the coursework describe the behavior of one branch, the block reliabilities of these two sub-systems is given by *@q2b-active-redundant-reliability*.
+
+$
+  R_(s y s) = 1 - product_(i=1)^n (1-R_i) quad -> quad R_("Gyro")^* = 1 - (1 - R_("Gyro"))^3 quad
+  R_("Battery")^* = 1 - (1 - R_("Battery"))^2
+$<q2b-active-redundant-reliability>
+
+=== m-out-of-n Reliability
+
+The Solar array subsystem is modelled as a 3-out-of-4 system. Applying the general equation for an m-out-of-n system to the solar panel subsystem yields *@q2b-m-n-reliability*.
+
+$
+  R_(s y s) = 1 - sum_(i=0)^(m-1) vec(n, i, delim: "(") R^i (1-R)^(n-i) quad quad "Where:" quad vec(n, i, delim: "(") equiv (n!)/(x!(n-x)!)
+  \
+  R_("Solar Array")^*= 1 - ([vec(4, 0, delim: "(") R^0 (1-R)^(4-0)]+[vec(4, 1, delim: "(") R^1 (1-R)^(4-1)]+[vec(4, 2, delim: "(") R^2 (1-R)^(4-2)])
+  \
+  = 1 - ((1-R_("Solar Array"))^4 + 4R_("Solar Array")(1-R_("Solar Array"))^3 + 6R_("Solar Array")^2(1-R_("Solar Array"))^2)
+$<q2b-m-n-reliability>
+
+=== Obtaining a Solution
+
+The reliability of the system was computed in Python (find at `Q2b\main.py`) by taking *@q2b-system-reliability* and substituting in *@q2b-system-reliability* and *@q2b-m-n-reliability*, the calculated reliability of the system after 20 years is shown in
+
+$
+  R_(s y s) (T=20) = 0.6902 quad quad ("to 4 d.p")
+$<q2b-solution>

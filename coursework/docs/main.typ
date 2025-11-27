@@ -24,8 +24,8 @@
 
 #align(left)[
   Author: Yusaf Sultan \
-  Student ID: 32750552
-  Lecturer: David Toal \
+  Student ID: 32750552  \
+  Lecturer: Dr David Toal \
   Word Count: #total-words  \
   #v(2cm)
 ]
