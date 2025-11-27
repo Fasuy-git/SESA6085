@@ -111,5 +111,5 @@ if __name__ == "__main__":
     end = time.time()
 
     print("Best log-likelihood:", best_ll)
-    print("Best params (mu_1, sigma_1, mu_2, sigma_2):", best_params)
+    print("Best params (mu_1, sigma_1, mu_2, sigma):", best_params)
     print(f"Elapsed time {end - start:.3f} seconds")

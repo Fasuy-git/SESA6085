@@ -49,7 +49,6 @@
     [Amount of Right Censored Time], extracted_data.at(2).at(0), [#extracted_data.at(2).at(1)],
     [Left Censored Time], extracted_data.at(3).at(0), [#extracted_data.at(3).at(1)],
     [Amount of Left Censored Time], extracted_data.at(4).at(0), [#extracted_data.at(4).at(1)],
-    [Left Censored Frequency], extracted_data.at(5).at(0), [#extracted_data.at(5).at(1)],
   ),
   caption: [Censoring applied to data in excel based on the student id (#student_id)],
 ) <how-data-is-censored>
@@ -194,14 +193,28 @@ $<1a-log-likelihood>
 
 === Obtaining Parameter Using Python Code
 
-The equation shown in *@1a-log-likelihood* is too complex to be solved by taking derivatives w.r.t each MLE parameter and then setting those equations to zero. Instead a brute force method is used to estimate the values of $accent(theta, hat) = accent(mu, hat)_1,accent(sigma, hat)_1,accent(mu, hat)_2,accent(sigma, hat)_2$. The Python code utilized for this analysis is included in the Zip file in `Q1a\main.py`. Using this code, the parameters generated are shown in *@q1a-solution*
+The equation shown in *@1a-log-likelihood* is too complex to be solved by taking derivatives w.r.t each MLE parameter and then setting those equations to zero. Instead a brute force method is used to estimate the values of $accent(theta, hat) = accent(mu, hat)_1,accent(sigma, hat)_1,accent(mu, hat)_2,accent(sigma, hat)_2$. The Python code utilized for this analysis is included in the Zip file at `Q1a\main.py`. Using this code, the parameters generated are shown in *@q1a-solution*
 
 $
   "Log Normal Dist Param" = cases(mu_1 = 2.6543, sigma_1 = 2.3610) quad
   "Normal Dist Param" = cases(mu_2 = 36.5430, sigma_2 = 4.4290)
 $<q1a-solution>
 
+== Calculate the probability that the system will fail after 35 hours. [1 mark]
 
+=== Defining the Formulation of the Probability
 
+Utilizing the parameters calculated in Q1a, the probability that a component will fail after 35 hours is given by the expression shown in *@q1b-formulation*.
+
+$
+  P(T > 35) = 1 - F(35) = 1 - (1-R_1(35))(1-R_2(35))
+  \ = 1 - (1 - [ 1/2(1+"erf"((ln(t) - mu_1)/(sigma_1 sqrt(2))))])(1 - [1/2(1+"erf"((t - mu_2)/(sigma_2 sqrt(2))))])
+$<q1b-formulation>
+
+Using the Python code, found in the Zip file at `Q1b\main.py`, the probability can be computed and the result is shown in *@q1b-solution*.
+
+$
+  P(T > 35) = 0.2236
+$<q1b-solution>
 
 
