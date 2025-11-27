@@ -289,3 +289,61 @@ The reliability of the system was computed in Python (find at `Q2b\main.py`) by 
 $
   R_(s y s) (T=20) = 0.6902 quad quad ("to 4 d.p")
 $<q2b-solution>
+
+== As a designer what satellite sub-systems would you target for improvement and why? [3 marks]
+
+=== Identifying Lowest Subsystem Reliability
+
+As the RBD in *Figure 2* models the satellite subsystems as a series system, increasing the reliability of the sub-system with the lowest reliability will yield the greatest improvement in system reliability. Altering the code from the previous question (new code is at `Q2c\main.py`) to display the system reliabilities yields the following *@q2c-subsystem-reliability*.
+
+#figure(
+  table(
+    columns: 2,
+    fill: (col, row) => if row == 0 { gray } else { white },
+    align: center + horizon,
+    table.header[*Subsystem Name*][*Reliability $R(T=20)$*],
+
+    [Gyro Subsystem], [1.0000],
+    [Battery Subsystem], [0.9937],
+    [Control Processor], [0.9850],
+    [Solar Array], [0.9722],
+    [Computer], [0.9655],
+    [Telemetry Tracking & Command], [0.9538],
+    [Electrical Distribution], [0.8942],
+    [Thruster], [0.8602],
+  ),
+  caption: [Subsystem reliability sorted from most to least reliable (rounded to 4.d.p).],
+)<q2c-subsystem-reliability>
+
+As can be seen from the table the thruster, electrical distribution and telemetry systems have the lowest reliability, therefore to increase the reliability of these systems (by increasing the redundancy through implementing some sort of redundancy) will increase the system's reliability. Alternatively, the gyro and battery subsystems have very high reliabilities, if there were mass or cost constraints then decreasing the reliability of these components will have less of an impact on the whole system.
+
+=== Computing Birnbaum's Importance Measure
+
+Birnbaum's importance measure is a method to quantify the importance a given subsystem and is calculated using *@birnbaums-importance-measure*.
+
+$
+  I_B^i (t) = (partial G(bold(q)(t)))/(partial q_i (t)) = G(1_i,bold(q)) - G(0_i,bold(q))
+$<birnbaums-importance-measure>
+
+Where $G(1_i,bold(q))$ is the system's unavailability when the $i^(t h)$ component is *operating normally* and $G(0_i,bold(q))$ is the system's unavailability when the $i^(t h)$ component is *inoperative*. Computing these measures for the system yields *@importance-metrics*.
+
+#figure(
+  table(
+    columns: 2,
+    fill: (col, row) => if row == 0 { gray } else { white },
+    align: center + horizon,
+    table.header[*Component Name*][*Importance Measure*],
+
+    [Gyro Subsystem], [0.6902],
+    [Battery Subsystem], [0.6946],
+    [Computer], [0.7149],
+    [Control Processor], [0.7007],
+    [Electrical Distribution], [0.7719],
+    [Telemetry Tracking & Command], [0.7237],
+    [Solar Array], [0.6933],
+    [Thruster], [0.8024],
+  ),
+  caption: [Component importance measures at $T = 20$, rounded to 4 d.p.],
+)<importance-metrics>
+
+Similar to *@q2c-subsystem-reliability*, the components with the highest importance metrics are those with the lowest reliabilities.
