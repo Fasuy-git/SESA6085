@@ -217,4 +217,23 @@ $
   P(T > 35) = 0.2236
 $<q1b-solution>
 
+#pagebreak()
 
+= Question 2
+== How many potential routes are there for data to pass from G1 to G2? List these routes. [2 Marks]
+
+For *Figure 1* in the coursework, the total number of paths the data can take, as well as the specific paths are detailed in *@q2a-solution*.
+
+$
+  "Number of paths :" 7
+  \
+  G 1 -> S 3 -> S 6 -> G 2
+  \
+  G 1 -> S 3-> S 5-> G 2
+  \
+  G 1 -> S 2-> S 5-> G 2 \
+  G 1 ->S 2 -> S 6-> G 2 \
+  G 1 ->S 2 -> S 4-> G 2 \
+  G 1 ->S 1 -> S 5-> G 2 \
+  G 1 ->S 1 -> S 4-> G 2
+$<q2a-solution>
