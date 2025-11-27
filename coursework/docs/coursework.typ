@@ -121,9 +121,9 @@ $
   ... + [1/(sigma_2 sqrt(2pi)) exp(-1/2((t-mu_2)/sigma_2)^2)][1/2(1 - "erf"((ln(t) - mu_1)/(sigma_1 sqrt(2))))]
 $<1a-full-pdf>
 
-=== Constructing the Liklehood Equation
+=== Constructing the Likelihood Function
 
-As defined in *@how-data-is-censored*, there is both right and left censoring in the set of data. The general form of  the liklehood equation with left and right censoring is shown in *@general-MLE-combined-censoring*.
+As defined in *@how-data-is-censored*, there is both right and left censoring in the set of data. The general form of  the likelihood equation with left and right censoring is shown in *@general-MLE-combined-censoring*.
 
 $
   L(bold(theta)) =
@@ -207,8 +207,8 @@ $<q1a-solution>
 Utilizing the parameters calculated in Q1a, the probability that a component will fail after 35 hours is given by the expression shown in *@q1b-formulation*.
 
 $
-  P(T > 35) = 1 - F(35) = 1 - (1-R_1(35))(1-R_2(35))
-  \ = 1 - (1 - [ 1/2(1+"erf"((ln(t) - mu_1)/(sigma_1 sqrt(2))))])(1 - [1/2(1+"erf"((t - mu_2)/(sigma_2 sqrt(2))))])
+  P(T > 35) = 1 - F(35) = R_1(35)R_2(35)
+  \ = [1/2(1 - "erf"((ln(t) - mu_1)/(sigma_1 sqrt(2))))][1/2(1 - "erf"((t - mu_2)/(sigma_2 sqrt(2))))]
 $<q1b-formulation>
 
 Using the Python code, found in the Zip file at `Q1b\main.py`, the probability can be computed and the result is shown in *@q1b-solution*.
@@ -227,15 +227,13 @@ For *Figure 1* in the coursework, the total number of paths the data can take, a
 $
   "Number of paths :" 7
   \
-  G 1 -> S 3 -> S 6 -> G 2
-  \
-  G 1 -> S 3-> S 5-> G 2
-  \
-  G 1 -> S 2-> S 5-> G 2 \
-  G 1 ->S 2 -> S 6-> G 2 \
-  G 1 ->S 2 -> S 4-> G 2 \
-  G 1 ->S 1 -> S 5-> G 2 \
-  G 1 ->S 1 -> S 4-> G 2
+  G 1 -> S 3 -> S 6 -> G 2 \
+  G 1 -> S 3 -> S 5 -> G 2 \
+  G 1 -> S 2 -> S 5 -> G 2 \
+  G 1 -> S 2 -> S 6 -> G 2 \
+  G 1 -> S 2 -> S 4 -> G 2 \
+  G 1 -> S 1 -> S 5 -> G 2 \
+  G 1 -> S 1 -> S 4 -> G 2
 $<q2a-solution>
 
 #pagebreak()
@@ -275,7 +273,7 @@ $<q2b-active-redundant-reliability>
 The Solar array subsystem is modelled as a 3-out-of-4 system. Applying the general equation for an m-out-of-n system to the solar panel subsystem yields *@q2b-m-n-reliability*.
 
 $
-  R_(s y s) = 1 - sum_(i=0)^(m-1) vec(n, i, delim: "(") R^i (1-R)^(n-i) quad quad "Where:" quad vec(n, i, delim: "(") equiv (n!)/(x!(n-x)!)
+  R_(s y s) = 1 - sum_(i=0)^(m-1) vec(n, i, delim: "(") R^i (1-R)^(n-i) quad quad "Where:" quad vec(n, i, delim: "(") equiv (n!)/(i!(n-i)!)
   \
   R_("Solar Array")^*= 1 - ([vec(4, 0, delim: "(") R^0 (1-R)^(4-0)]+[vec(4, 1, delim: "(") R^1 (1-R)^(4-1)]+[vec(4, 2, delim: "(") R^2 (1-R)^(4-2)])
   \
@@ -347,3 +345,22 @@ Where $G(1_i,bold(q))$ is the system's unavailability when the $i^(t h)$ compone
 )<importance-metrics>
 
 Similar to *@q2c-subsystem-reliability*, the components with the highest importance metrics are those with the lowest reliabilities.
+
+#pagebreak()
+
+== Employ a Monte Carlo simulation with 500 iterations to calculate the probability that at 20 years it will still be possible to transmit a signal from G1 to G2. [10 marks]
+
+The reliability of a satellite after 20 years was previously calculated ($R_(s y s) (T=20) = 0.6902$). In order to estimate the probability that a signal will still be transmitted after 20 years through the network, the following analysis is used:
+
+- Calculate the reliability of one satellite after 20 years (already computed).
+- Define the possible paths a signal can take between the two ground stations (already calculated).
+- Using a random number generator see if a given satellite is active or inactive by seeing if the generated number is above or below the reliability
+- See if there are any viable paths for the signal to traverse.
+- Add up all of the successful trials and calculate a probability of success.
+
+After performing the Monte-Carlo analysis with 500 trials, the probability that a signal will be able
+to be sent from G1 $->$ G2 is shown in
+
+$
+  P("Signal" G 1 -> G 2 "at" 20 "years") = 0.936
+$<q2d-solution>

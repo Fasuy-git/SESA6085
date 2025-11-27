@@ -72,13 +72,6 @@
   #v(1cm)
 
   #outline(
-    title: [List of Figures],
-    target: figure.where(kind: figure),
-  )
-
-  #v(1cm)
-
-  #outline(
     title: [List of Tables],
     target: figure.where(kind: table),
   )
