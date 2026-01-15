@@ -108,7 +108,7 @@
 #include "lecture_11/lecture_11.typ"
 #include "lecture_12/lecture_12.typ"
 #include "lecture_13/lecture_13.typ"
-//#include "lecture_14/lecture_14.typ"
+#include "lecture_14/lecture_14.typ"
 //#include "lecture_15/lecture_15.typ"
 //#include "lecture_16/lecture_16.typ"
 //#include "lecture_17/lecture_17.typ"
