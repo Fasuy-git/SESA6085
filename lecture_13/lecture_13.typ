@@ -78,5 +78,98 @@ An example of this method is shown in *@13-robust-reg-graph-example* for a piece
   ],
 )
 
+== Expectancy Measures of Robustness
 
+Robust regularization has some problems in that the robust function cannot always be found and the selection of $epsilon$ is up to guessing (too large $->$ conservative, too small $->$ fragile). Instead expectancy based methods use a PDF to act as the input, randomizing f(x) the two expectancy measure based methods are:
 
+- Aggregation.
+- Randomized approaches.
+
+=== Aggregation
+
+This methods uses integrals to create measures of robustness. The integral measures of robustness, $F_1(x)$ and $F_2(x)$ are shown in *@13-integral-measures-of-robustness*.
+
+$
+  F_1(x) = integral f(x + epsilon) P(epsilon) d epsilon
+  quad quad quad
+  F_2(x) = integral (f(x + epsilon) - f(x))^2 P(epsilon) d epsilon
+$<13-integral-measures-of-robustness>
+
+Where:
+- *$P(epsilon)$*: PDF of the uncertainty within $epsilon$.
+- *$F_1(x)$*: Measure of the mean value of $f(x)$ over the distribution.
+- *$F_2(x)$*: Measure of plateau-like like regions in the distribution.
+
+If $P(epsilon)$ is a normal distribution, increasing $sigma$  will yield a smoothed form of $f(x)$ in $F_1(x)$ and will emphasize plateau regions in $F_2(x)$ of $f(x)$, this is shown in *@13-f-1-x* and *@13-f-2-x* respectively.
+
+#grid(
+  columns: 2,
+  column-gutter: 1cm,
+  [#figure(
+    image("images/13-f-1-x.png", width: 100%),
+    caption: [Plot of $F_1 (x)$ for increasing values of $sigma$.],
+    supplement: [Figure],
+    kind: figure,
+  )<13-f-1-x>],
+  [#figure(
+    image("images/13-f-2-x.png", width: 120%),
+    caption: [Plot of $F_2 (x)$ for increasing values of $sigma$.],
+    supplement: [Figure],
+    kind: figure,
+  )<13-f-2-x>],
+)
+
+Typically a given design will most likely want the best mean with low variance (lowest $F_1 (x)$ and $F_2 (x)$), however these are often conflicting (high $F_1 (x)$ means a low $F_2 (x)$). To combat this, the following two options can be used:
+
+How do we combat this?
+- We could use some form of weighted sum of $F_1 (x)$ and $F_2 (x)$.
+- Apply a multi-objective optimization to create a Pareto front of $F_1 (x)$ and $F_2 (x)$ (see *@13-pareto-front* and *@13-pareto-front-plotted*).
+
+#grid(
+  columns: 2,
+  column-gutter: 1cm,
+  [#figure(
+    image("images/13-pareto-front.png", width: 100%),
+    caption: [Plot of Pareto front for $F_1 (x)$ and $F_2 (x)$],
+    supplement: [Figure],
+    kind: figure,
+  )<13-pareto-front>],
+  [#figure(
+    image("images/13-plotted-pareto-front.png", width: 130%),
+    caption: [Plot of the Pareto front onto f(x).],
+    supplement: [Figure],
+    kind: figure,
+  )<13-pareto-front-plotted>],
+)
+
+#pagebreak()
+
+=== Randomized Approaches
+
+In some cases an analytical form of f(x) cannot be determined or for $P(epsilon)$. Instead a randomized approach for robust optimization can be used such as a Monte Carlo or Quasi-Monte Carlo. An example of this is shown in *@13-monte*.
+
+#figure(
+  image("images/13-radnomized-robust-optimzation.png", width: 100%),
+  caption: [Utilizing randomized approaches for robust optimization.],
+  supplement: [Figure],
+  kind: figure,
+)<13-monte>
+
+=== Surrogate Models
+
+The issue with Monte Carlo methods is that they can be expensive to perform as many trials are needed. Especially if near the tail end of the PDF. In such cases surrogate modelling can be used which is essentially a curve fit which has an element of uncertainty baked into it.
+
+== Threshold Measures of Robustness
+
+In this method a threshold of q is defined and then the design is optimized to ensure that the function remains above or below q ($Pr(f lt.eq q)$ or $Pr(f gt.eq q)$). This is called reliability design.
+
+== Reliability Design Vs Robust Design
+
+Both methods consider performance of a system with respect to a PDF, the differencaes are:
+
+- *Robust Design*: considers behavior over the whole PDF, mean, standard deviation etc.
+- *Reliability Design*: considers behavior at the tails of the PDF, where the system will fail.
+
+Both can be considered as design objectives or constraints and traded against other objectives if necessary.
+
+#pagebreak()
